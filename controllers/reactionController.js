@@ -18,14 +18,12 @@ module.exports = {
   },
   // Create a Reaction
   createReaction(req, res) {
-    Reaction.create(req.body)
-      .then((Reaction) => {
-        return Thought.findOneAndUpdate(
-          { _id: req.body.ThoughtId },
-          { $push: { Reactions: Reaction._id } },
+         Thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $push: { reactions: req.body } },
           { new: true }
-        );
-      })
+        )
+     
       .then((Thought) =>
         !Thought
           ? res

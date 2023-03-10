@@ -4,8 +4,8 @@ const userSchema = new Schema(
     {
       username: String,
       email: String,
-      thoughts: [{ type: Schema.Types.thoughtId, ref: 'comment' }],
-      friends: [{ type: Schema.Types.userId, ref: 'comment' }],
+      thoughts: [{ type: Schema.Types.thoughtId, ref: 'thought' }],
+      friends: [{ type: Schema.Types.userId, ref: 'user' }],
     },
     {
       toJSON: {
@@ -21,6 +21,6 @@ userSchema.virtual('friendCount').get(function () {
   });
   
   // Initialize our Post model
-  const Post = model('post', userSchema);
+  const User = model('user', userSchema);
   
-  module.exports = Post;
+  module.exports = User;
