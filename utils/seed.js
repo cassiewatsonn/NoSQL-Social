@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { Post, Comment } = require('../models');
+const { Thought, User } = require('../models');
 const {
   getRandomUserName,
   getRandomReaction,
@@ -13,34 +13,41 @@ console.time('seeding');
 // Creates a connection to mongodb
 connection.once('open', async () => {
   // Delete the entries in the collection
-  await Post.deleteMany({});
-  await Comment.deleteMany({});
-
-  // Empty arrays for randomly generated posts and comments
-  const comments = [...getRandomReaction(10)];
-  const posts = [];
-
-  // Makes comments array
-  const makeThought = (text) => {
-    posts.push({
-      text,
+  await Thought.deleteMany({});
+  await User.deleteMany({});
+  const userData =[]
+  // Empty arrays for randomly generated posts and reactions
+  const reactions = [...getRandomReaction(10)];
+  const thoughts = [];
+  for(let i=0; i<10; i++ ){
+    const username = getRandomUserName().split(' ')[0]
+    const email= `${username}@${username}.com`
+    userData.push({
+      email,
+      username
+    });
+  }
+  // Makes reactions array
+  const makeThought = (thoughtText) => {
+    thoughts.push({
+      thoughtText,
       username: getRandomUserName().split(' ')[0],
-      comments: [comments[genRandomIndex(comments)]._id],
+      reactions: [reactions[genRandomIndex(reactions)]._id],
     });
   };
 
-  // Wait for the comments to be inserted into the database
-  await Comment.collection.insertMany(comments);
+  // Wait for the reactions to be inserted into the database
+  await User.collection.insertMany(userData);
 
-  // For each of the comments that exist, make a random post of 10 words
-  comments.forEach(() => makeThought(getRandomThought(10)));
+  // For each of the reactions that exist, make a random post of 10 words
+  reactions.forEach(() => makeThought(getRandomThought(10)));
 
   // Wait for the posts array to be inserted into the database
-  await Post.collection.insertMany(posts);
+  await Thought.collection.insertMany(thoughts);
 
-  // Log out a pretty table for comments and posts
-  console.table(comments);
-  console.table(posts);
+  // Log out a pretty table for reactions and posts
+  console.table(reactions);
+  console.table(thoughts);
   console.timeEnd('seeding complete 🌱');
   process.exit(0);
 });

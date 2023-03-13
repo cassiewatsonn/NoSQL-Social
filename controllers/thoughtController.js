@@ -21,4 +21,33 @@ module.exports = {
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
+  updateThought(req,res){
+    Thought.findOneAndUpdate(
+        { _id: req.params.ThoughtId},
+        { $set: req.body },
+        { new: true }
+        )
+    .then((dbThoughtData) => res.json('Thought successfully updated!'))
+    .catch((err) => res.status(500).json(err));
+  },
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.ThoughtId })
+      .then((Thought) =>
+        !Thought
+          ? res.status(404).json({ message: 'No thought with this id!' })
+          : Thought.findOneAndUpdate(
+              { users: req.params.ThoughtId },
+              { $pull: { users: req.params.ThoughtId } },
+              { new: true }
+            )
+      )
+      .then((thought) =>
+        !thought
+          ? res
+              .status(404)
+              .json({ message: 'thought created but no user with this id!' })
+          : res.json({ message: 'thought successfully deleted!' })
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
