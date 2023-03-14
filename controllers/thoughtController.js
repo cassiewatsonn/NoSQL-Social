@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 
 module.exports = {
   getThoughts(req, res) {
@@ -70,4 +70,47 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
+
+
+
+  // Reactions
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+     { _id: req.params.thoughtId },
+     { $push: { reactions: req.body } },
+     { new: true }
+   )
+
+ .then((Thought) =>
+   !Thought
+     ? res
+         .status(404)
+         .json({ message: 'Reaction created, but no Thoughts with this ID' })
+     : res.json({ message: 'Reaction created' })
+ )
+ .catch((err) => {
+   console.error(err);
+ });
+},
+removeReaction(req, res) {
+Reaction.findOneAndDelete({ _id: req.params.reactionId })
+ .then((reaction) => {
+   if (!reaction) {
+     return res.status(404).json({ message: 'No reaction with this id!' });
+   }
+   return Thought.findOneAndUpdate(
+     { reactions: req.params.reactionId },
+     { $pull: { reactions: req.params.reactionId } },
+     { new: true }
+   ).exec();
+ })
+ .then((updatedThought) => {
+   if (!updatedThought) {
+     return res.status(404).json({ message: 'Reaction not found in any thoughts!' });
+   }
+   return res.json({ message: 'Reaction successfully deleted!' });
+ })
+ .catch((err) => res.status(500).json(err));
+}
 };
