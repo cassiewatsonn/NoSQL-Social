@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   getThoughts(req, res) {
@@ -7,7 +7,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   getSingleThought(req, res) {
-    Thought.findOne({ _id: req.params.ThoughtId })
+    Thought.findOne({ _id: req.params.thoughtId })
       .then((Thought) =>
         !Thought
           ? res.status(404).json({ message: 'No Thought with that ID' })
@@ -16,28 +16,48 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // create a new Thought
+  // createThought(req, res) {
+  //   Thought.create(req.body)
+  //     .then((dbThoughtData) => res.json(dbThoughtData))
+  //     .catch((err) => res.status(500).json(err));
+  // },
+
+
+
+
   createThought(req, res) {
     Thought.create(req.body)
-      .then((dbThoughtData) => res.json(dbThoughtData))
-      .catch((err) => res.status(500).json(err));
-  },
+    .then((Thought) =>
+    !Thought
+      ? res.status(404).json({ message: 'No thought with this id!' })
+      : User.findOneAndUpdate(
+          { users: req.params.thoughtId },
+          { $push: [{ thoughtId: req.body.users }] },
+          { new: true }
+        ))},
+
+
+
+
   updateThought(req,res){
     Thought.findOneAndUpdate(
-        { _id: req.params.ThoughtId},
+        { _id: req.params.thoughtId},
         { $set: req.body },
         { new: true }
         )
     .then((dbThoughtData) => res.json('Thought successfully updated!'))
     .catch((err) => res.status(500).json(err));
   },
+
+
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.ThoughtId })
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((Thought) =>
         !Thought
           ? res.status(404).json({ message: 'No thought with this id!' })
           : Thought.findOneAndUpdate(
-              { users: req.params.ThoughtId },
-              { $pull: { users: req.params.ThoughtId } },
+              { users: req.params.thoughtId },
+              { $pull: { users: req.params.thoughtId } },
               { new: true }
             )
       )
