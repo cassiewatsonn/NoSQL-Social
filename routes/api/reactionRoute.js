@@ -3,6 +3,7 @@ const {
   getReactions,
   getSingleReaction,
   createReaction,
+  deleteReaction
 } = require('../../controllers/reactionController');
 
 // /api/reactions

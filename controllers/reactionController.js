@@ -8,7 +8,7 @@ module.exports = {
   },
   // Get a single Reaction
   getSingleReaction(req, res) {
-    Reaction.findOne({ _id: req.params.ReactionId })
+    Reaction.findOne({ _id: req.params.reactionId })
       .then((Reaction) =>
         !Reaction
           ? res.status(404).json({ message: 'No Reaction found with that id' })
@@ -34,5 +34,27 @@ module.exports = {
       .catch((err) => {
         console.error(err);
       });
+  },
+
+
+
+  deleteReaction(req, res) {
+    Reaction.findOneAndDelete({ _id: req.params.reactionId })
+      .then((Reaction) =>
+        !Reaction
+          ? res.status(404).json({ message: 'No reaction with this id!' })
+          : Reaction.findOneAndUpdate(
+              { users: req.params.reactionId },
+              { $pull: { users: req.params.reactionId } },
+              { new: true }
+            )
+      )
+      .then((reaction) =>
+        !reaction
+          ? res
+              .status(404)
+          : res.json({ message: 'reaction successfully deleted!' })
+      )
+      .catch((err) => res.status(500).json(err));
   },
 };
