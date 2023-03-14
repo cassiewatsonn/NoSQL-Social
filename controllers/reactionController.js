@@ -35,26 +35,64 @@ module.exports = {
         console.error(err);
       });
   },
-
-
-
   deleteReaction(req, res) {
     Reaction.findOneAndDelete({ _id: req.params.reactionId })
-      .then((Reaction) =>
-        !Reaction
-          ? res.status(404).json({ message: 'No reaction with this id!' })
-          : Reaction.findOneAndUpdate(
-              { users: req.params.reactionId },
-              { $pull: { users: req.params.reactionId } },
-              { new: true }
-            )
-      )
-      .then((reaction) =>
-        !reaction
-          ? res
-              .status(404)
-          : res.json({ message: 'reaction successfully deleted!' })
-      )
+      .then((reaction) => {
+        if (!reaction) {
+          return res.status(404).json({ message: 'No reaction with this id!' });
+        }
+        return Thought.findOneAndUpdate(
+          { reactions: req.params.reactionId },
+          { $pull: { reactions: req.params.reactionId } },
+          { new: true }
+        ).exec();
+      })
+      .then((updatedThought) => {
+        if (!updatedThought) {
+          return res.status(404).json({ message: 'Reaction not found in any thoughts!' });
+        }
+        return res.json({ message: 'Reaction successfully deleted!' });
+      })
       .catch((err) => res.status(500).json(err));
-  },
+  }
+  
+  // deleteReaction(req, res) {
+  //   Thought.findOneAndDelete({ _id: req.params.reactionId })
+  //     .then((reaction) => {
+  //       if (!reaction) {
+  //         return res.status(404).json({ message: 'No reaction with this id!' });
+  //       }
+  //       return Thought.findOneAndUpdate(
+  //         { users: req.params.reactionId },
+  //         { $pull: { users: req.params.reactionId } },
+  //         { new: true }
+  //       ).exec();
+  //     })
+  //     .then((updatedThought) => {
+  //       if (!updatedThought) {
+  //         return res.status(404).json({ message: 'Reaction not found in any thoughts!' });
+  //       }
+  //       return res.json({ message: 'Reaction successfully deleted!' });
+  //     })
+  //     .catch((err) => res.status(500).json(err));
+  // }
+  
+
+  // deleteReaction(req, res) {
+  //   Thought.findOneAndDelete({ _id: req.params.reactionId })
+  //     .then((Reaction) =>
+
+  //         : Reaction.findOneAndUpdate(
+  //             { users: req.params.reactionId },
+  //             { $pull: { users: req.params.reactionId } },
+  //             { new: true }
+  //           )
+  //     )
+  //     .then((reaction) =>
+
+  //             .status(404)
+  //         : res.json({ message: 'reaction successfully deleted!' })
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };

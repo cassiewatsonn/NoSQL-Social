@@ -11,7 +11,8 @@ router.route('/').get(getReactions)
 router.route('/:thoughtId').post(createReaction);
 
 // /api/reactions/:reactionId
-router.route('/:reactionId').get(getSingleReaction);
+router.route('/:reactionId').get(getSingleReaction)
+.delete(deleteReaction);
 
 module.exports = router;
 
