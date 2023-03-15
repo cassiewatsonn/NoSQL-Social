@@ -25,7 +25,11 @@ After you have successfully installed the package (if you have not yet installed
 
 ## ![npm start](./assets/images/npmstart.png)
 
-This means the server is running! note: you will need the insomnia application to test the routes!
+This means the server is running! note: you will need the insomnia application to test the routes! Also, once you start the server, the Mongoose models are synced to the MongoDb database. (See Images Below).
+
+## ![Mongo 1](./assets/images/mongo1.png)
+
+## ![Mongo 2](./assets/images/mongo2.png)
 
 When I open API GET routes in Insomnia for users and thoughts, then the data for each of these routes is displayed in a formatted JSON. (See Below Images).
 
