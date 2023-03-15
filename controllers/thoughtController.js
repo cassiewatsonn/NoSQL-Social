@@ -15,14 +15,6 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new Thought
-  // createThought(req, res) {
-  //   Thought.create(req.body)
-  //     .then((dbThoughtData) => res.json(dbThoughtData))
-  //     .catch((err) => res.status(500).json(err));
-  // },
-
-
 
 
   createThought(req, res) {
@@ -36,9 +28,6 @@ module.exports = {
           { new: true }
           ).then((Thought) => res.json('Thought successfully posted!'))
         )},
-        
-
-
 
 
   updateThought(req,res){
@@ -52,26 +41,6 @@ module.exports = {
   },
 
 
-  // deleteThought(req, res) {
-  //   Thought.findOneAndDelete({ _id: req.params.thoughtId })
-  //     .then((Thought) =>
-  //       !Thought
-  //         ? res.status(404).json({ message: 'No thought with this id!' })
-  //         : Thought.findOneAndUpdate(
-  //             { users: req.params.thoughtId },
-  //             { $pull: { users: req.params.thoughtId } },
-  //             { new: true }
-  //           )
-  //     )
-  //     .then((thought) =>
-  //       !thought
-  //         ? res
-  //             .status(404)
-  //             .json({ message: 'thought created but no user with this id!' })
-  //         : res.json({ message: 'thought successfully deleted!' })
-  //     )
-  //     .catch((err) => res.status(500).json(err));
-  // },
   deleteThought(req, res) {
     Thought.findOneAndDelete(
         { _id: req.params.thoughtId }
@@ -133,14 +102,4 @@ removeReaction(req, res) {
   .catch((err) => res.status(500).json(err));
  }
 };
-// Reaction.findOneAndDelete({ _id: req.params.reactionId })
-//  .then((reaction) => {
-//    if (!reaction) {
-//      return res.status(404).json({ message: 'No reaction with this id!' });
-   
 
-  //  return Thought.findOneAndUpdate(
-  //    { reactions: req.params.reactionId },
-  //    { $pull: { reactions: req.params.reactionId } },
-  //    { new: true }
-  //  ).exec();
