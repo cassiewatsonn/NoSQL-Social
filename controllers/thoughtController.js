@@ -1,4 +1,4 @@
-const { Thought, User, Reaction } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   getThoughts(req, res) {
@@ -74,7 +74,8 @@ module.exports = {
 
 
 
-  // Reactions
+  //** REACTIONS */ 
+
   addReaction(req, res) {
     Thought.findOneAndUpdate(
      { _id: req.params.thoughtId },
