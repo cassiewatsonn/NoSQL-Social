@@ -19,14 +19,14 @@ module.exports = {
 
   createThought(req, res) {
     Thought.create(req.body)
-    .then((Thought) =>
-    !Thought
+    .then((thought) =>
+    !thought
       ? res.status(404).json({ message: 'No thought with this id!' })
       : User.findOneAndUpdate(
-          { users: req.params.thoughtId },
-          { $push: [{ thoughtId: req.body.users }] },
+          { username: req.body.username },
+          { $addToSet: { thoughts: thought._id } },
           { new: true }
-          ).then((Thought) => res.json('Thought successfully posted!'))
+          ).then((thought) => res.json('Thought successfully posted!'))
         )},
 
 
@@ -45,12 +45,12 @@ module.exports = {
     Thought.findOneAndDelete(
         { _id: req.params.thoughtId }
     )
-      .then((Thought) => 
-        !Thought
+      .then((thought) => 
+        !thought
           ? res.status(404).json({ message: 'No thought with this id!' })
-          : Thought.findOneAndUpdate(
-              { users: req.params.thoughtId },
-              { $pull: { users: req.params.thoughtId } },
+          : User.findOneAndUpdate(
+              { thoughts: req.params.thoughtId },
+              { $pull: { thoughts: req.params.thoughtId } },
               { new: true }
             )
       )
@@ -60,7 +60,7 @@ module.exports = {
         }
         return res.json({ message: 'thought successfully deleted!' });
       })
-      .catch((err) => res.status(200).json(err));
+      .catch((err) => res.status(500).json(err));
   },
 
 
