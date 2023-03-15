@@ -52,9 +52,31 @@ module.exports = {
   },
 
 
+  // deleteThought(req, res) {
+  //   Thought.findOneAndDelete({ _id: req.params.thoughtId })
+  //     .then((Thought) =>
+  //       !Thought
+  //         ? res.status(404).json({ message: 'No thought with this id!' })
+  //         : Thought.findOneAndUpdate(
+  //             { users: req.params.thoughtId },
+  //             { $pull: { users: req.params.thoughtId } },
+  //             { new: true }
+  //           )
+  //     )
+  //     .then((thought) =>
+  //       !thought
+  //         ? res
+  //             .status(404)
+  //             .json({ message: 'thought created but no user with this id!' })
+  //         : res.json({ message: 'thought successfully deleted!' })
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((Thought) =>
+    Thought.findOneAndDelete(
+        { _id: req.params.thoughtId }
+    )
+      .then((Thought) => 
         !Thought
           ? res.status(404).json({ message: 'No thought with this id!' })
           : Thought.findOneAndUpdate(
@@ -63,14 +85,13 @@ module.exports = {
               { new: true }
             )
       )
-      .then((thought) =>
-        !thought
-          ? res
-              .status(404)
-              .json({ message: 'thought created but no user with this id!' })
-          : res.json({ message: 'thought successfully deleted!' })
-      )
-      .catch((err) => res.status(500).json(err));
+      .then((thought) => {
+        if (!thought) {
+          return res.status(404).json({ message: 'thought created but no user with this id!' });
+        }
+        return res.json({ message: 'thought successfully deleted!' });
+      })
+      .catch((err) => res.status(200).json(err));
   },
 
 

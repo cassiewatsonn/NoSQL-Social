@@ -21,7 +21,11 @@ To install this package, you will gather the files from the [NoSQL-Social GitHub
 
 Here is a video displaying how to application works: [NoSQL-Social Video](https://)
 
-After you have successfully installed the package (if you have not yet installed, please refer to [Installation](#installation)),
+After you have successfully installed the package (if you have not yet installed, please refer to [Installation](#installation)), run 'npm start' in your terminal you will get a message like this:
+
+## ![npm start](./assets/images/npmstart.png)
+
+This means the server is running!
 
 GIVEN a social network API
 
