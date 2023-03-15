@@ -67,19 +67,7 @@ addFriend(req, res) {
       )
       .catch((err) => res.status(500).json(err));
 },
-//   addFriend(req, res) {
-//     User.findOneAndUpdate(
-//         { _id: req.params.userId },
-//         { $addToSet: { friends: req.params.friendId } },
-//         { new: true }
-//         )
-//         .then((user) => 
-//           !user
-//               ? res.status(404).json({ message: 'There is no user with that ID' })
-//               : res.json(user)({ message: 'Friend Added!' })
-//         )
-//         .catch((err) => res.status(500).json(err));
-// },
+
 
 
 removeFriend(req, res) {
