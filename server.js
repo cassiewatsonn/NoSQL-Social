@@ -1,13 +1,13 @@
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
-const mongodb = require('mongodb').MongoClient;
+// const mongodb = require('mongodb').MongoClient;
 
 const PORT = 3001;
 const app = express();
 
 // Connection string to local instance of MongoDB including database name
-const connectionStringURI = `mongodb://127.0.0.1:27017/socialDB`;
+// const connectionStringURI = `mongodb://127.0.0.1:27017/socialDB`;
 // Declare a variable to hold the connection
 // let db;
 
