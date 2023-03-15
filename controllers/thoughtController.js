@@ -34,7 +34,9 @@ module.exports = {
           { users: req.params.thoughtId },
           { $push: [{ thoughtId: req.body.users }] },
           { new: true }
-        ))},
+          ).then((Thought) => res.json('Thought successfully posted!'))
+        )},
+        
 
 
 
