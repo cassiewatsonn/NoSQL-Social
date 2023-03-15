@@ -2,7 +2,7 @@
 
 ## Description
 
-NoSQL-Social uses MongoDB due to its speed with large amounts of data, and felxibility with unstructured data. This is a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
+This NoSQL-Social backend uses MongoDB due to its speed with large amounts of data, and flexibility with unstructured data. This is a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
 
 ## Table of Contents
 
@@ -19,23 +19,21 @@ To install this package, you will gather the files from the [NoSQL-Social GitHub
 
 ## Usage
 
-Here is a video displaying how to application works: [NoSQL-Social Video](https://)
+Here is a video displaying how to application works: [NoSQL-Social Video](https://drive.google.com/file/d/1G_LUFaymvAIrMsf0j5eyzPwAQQEwlqy0/view)
 
 After you have successfully installed the package (if you have not yet installed, please refer to [Installation](#installation)), run 'npm start' in your terminal you will get a message like this:
 
 ## ![npm start](./assets/images/npmstart.png)
 
-This means the server is running!
+This means the server is running! note: you will need the insomnia application to test the routes!
 
-GIVEN a social network API
+When I open API GET routes in Insomnia for users and thoughts, then the data for each of these routes is displayed in a formatted JSON. (See Below Images).
 
-When I enter the command to invoke the application, then my server is started and the Mongoose models are synced to the MongoDB database.
+## ![User Get](./assets/images/userget.png)
 
-When I open API GET routes in Insomnia for users and thoughts, then the data for each of these routes is displayed in a formatted JSON
+## ![Thought Get](./assets/images/thoughtget.png)
 
-When I test API POST, PUT, and DELETE routes in Insomnia, then I am able to successfully create, update, and delete users and thoughts in my database
-
-When I test API POST and DELETE routes in Insomnia, then I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
+When I test API POST, PUT, and DELETE routes in Insomnia, then I am able to successfully create, update, and delete users and thoughts in my database. When I test API POST and DELETE routes in Insomnia, then I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list. Please refer to [NoSQL-Social Video](https://drive.google.com/file/d/1G_LUFaymvAIrMsf0j5eyzPwAQQEwlqy0/view) to see full walk-through.
 
 ## License Description
 
@@ -72,7 +70,7 @@ N/A
 
 ## Credits
 
-Thank you to my study partner's [Rebecca Lawrence](https://github.com/rkml14), AskBCS Staff and my tutors Eric Sayer and Jehyun Jung!
+Thank you to my study partner's [Rebecca Lawrence](https://github.com/rkml14), AskBCS Staff and my tutors Eric Sayer and Jehyun Jung! Also, huge thank you to [Connor Savoy](https://github.com/Connor812) for helping me with last minute errors!
 
 ## Questions
 
